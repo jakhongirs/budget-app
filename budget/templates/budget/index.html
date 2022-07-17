@@ -1,4 +1,5 @@
 <html>
+{% load mathfilters %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -7,6 +8,27 @@
     <title>Budget App</title>
 </head>
 <body>
-<h1>Welcome to Home Page!</h1>
+
+<h1>Budget App</h1>
+
+<p>Budget: {{budgets}}$</p>
+<p>Expense: {{all_expense_amount}}$</p>
+<p>Balance: {{ budgets|sub:all_expense_amount }}$</p>
+
+<ul>
+    {% for expense in expenses %}
+    <li style="display: flex">
+        <p style="margin-left: 20px">{{ expense.1 }}</p>
+        <p style="margin-left: 20px">{{ expense.2 }}</p>
+        <p style="margin-left: 20px">{{ expense.3 }}</p>
+        <a href="/update_expense/{{expense.0}}">Update</a>
+        <a style="margin-left: 20px" href="/delete_expense/{{expense.0}}">Delete</a>
+    </li>
+    {% endfor %}
+</ul>
+
+
+<a href="{% url 'budget:budget_form' %}">Add Budget</a>
+<a href="{% url 'budget:expense_form' %}">Add Expense</a>
 </body>
 </html>
